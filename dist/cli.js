@@ -1,40 +1,26 @@
 #!/usr/bin/env node
-const { Command } = require("commander");
-const axios = require("axios");
-const program = new Command();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const commander_1 = require("commander");
+const GreetCommand_1 = require("./commands/GreetCommand");
+const MathCommand_1 = require("./commands/MathCommand");
+const JokeCommand_1 = require("./commands/JokeCommand");
+const GithubCommand_1 = require("./commands/GithubCommand");
+const QuoteCommand_1 = require("./commands/QuoteCommand");
+const FileInfoCommand_1 = require("./commands/FileInfoCommand");
+const DogCommand_1 = require("./commands/DogCommand");
+const AdviceCommand_1 = require("./commands/AdviceCommand");
+const program = new commander_1.Command();
 program
-    .command("greet <name>")
-    .action((name) => (console.log(`Hello ${name}!`)));
-program
-    .command("add <num1> <num2>")
-    .action((num1, num2) => (console.log(`${num1} + ${num2} = ${Number(num1) + Number(num2)}`)));
-program
-    .command("sub <num1> <num2>")
-    .action((num1, num2) => (console.log(`${num1} - ${num2} = ${Number(num1) - Number(num2)}`)));
-program
-    .command("mul <num1> <num2>")
-    .action((num1, num2) => (console.log(`${num1} * ${num2} = ${Number(num1) * Number(num2)}`)));
-program
-    .command("div <num1> <num2>")
-    .action((num1, num2) => {
-    if (Number(num2) === 0) {
-        console.log("Error: Division by zero is not allowed.");
-    }
-    else {
-        console.log(`${num1} / ${num2} = ${Number(num1) / Number(num2)}`);
-    }
-});
-program
-    .command("joke")
-    .description("Tells a random joke")
-    .action(async () => {
-    try {
-        const response = await axios.get("https://official-joke-api.appspot.com/random_joke");
-        const joke = response.data;
-        console.log(`${joke.setup}\n${joke.punchline}`);
-    }
-    catch (error) {
-        console.error("Error fetching joke:", error);
-    }
-});
+    .name("mycli")
+    .description("CLI tool for SESD Workshop 2")
+    .version("1.0.0");
+new GreetCommand_1.GreetCommand().register(program);
+new MathCommand_1.MathCommand().register(program);
+new JokeCommand_1.JokeCommand().register(program);
+new GithubCommand_1.GithubCommand().register(program);
+new QuoteCommand_1.QuoteCommand().register(program);
+new FileInfoCommand_1.FileInfoCommand().register(program);
+new DogCommand_1.DogCommand().register(program);
+new AdviceCommand_1.AdviceCommand().register(program);
 program.parse();
